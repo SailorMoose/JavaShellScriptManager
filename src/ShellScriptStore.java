@@ -21,6 +21,7 @@
  */
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class ShellScriptStore implements Serializable {
 
@@ -29,8 +30,13 @@ public class ShellScriptStore implements Serializable {
     private String name;
     private String directory;
 
+    /**
+     * @param path Full path to script to store
+     */
     ShellScriptStore(String path){
         this.path=path;
+
+        // Use the position of the last slash to detect default working directory and name
         int lastSlash=path.lastIndexOf('/');
         if(lastSlash!=-1) {
             this.name = path
@@ -40,11 +46,22 @@ public class ShellScriptStore implements Serializable {
                     .substring(0, lastSlash)
                     .trim();
         }
+
         else{
             this.name=path;
             this.directory="$HOME";
         }
         this.description=null;
+    }
+
+    /**
+     * @param original The object to make a copy of
+     */
+    ShellScriptStore(ShellScriptStore original){
+        this.name=original.name;
+        this.description=original.description;
+        this.directory=original.directory;
+        this.path=original.path;
     }
 
 
@@ -78,5 +95,28 @@ public class ShellScriptStore implements Serializable {
 
     public void setDirectory(String directory) {
         this.directory = directory;
+    }
+
+    @Override
+    public String toString() {
+        return "ShellScriptStore{" +
+                "path='" + path + '\'' +
+                ", description='" + description + '\'' +
+                ", name='" + name + '\'' +
+                ", directory='" + directory + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ShellScriptStore that = (ShellScriptStore) o;
+        return getPath().equals(that.getPath());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPath());
     }
 }

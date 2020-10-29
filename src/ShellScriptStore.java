@@ -20,6 +20,8 @@
  *
  */
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -33,7 +35,7 @@ public class ShellScriptStore implements Serializable {
     /**
      * @param path Full path to script to store
      */
-    ShellScriptStore(String path){
+    ShellScriptStore(@NotNull String path){
         this.path=path;
 
         // Use the position of the last slash to detect default working directory and name
@@ -63,7 +65,6 @@ public class ShellScriptStore implements Serializable {
         this.directory=original.directory;
         this.path=original.path;
     }
-
 
     public String getPath() {
         return path;

@@ -23,11 +23,44 @@
  */
 
 import java.io.ObjectStreamClass;
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class ScriptManager{
-    private static ArrayList<ShellScriptStore> shellScriptList;
 
+    private static Map<Integer,ShellScriptStore> shellScriptList;
 
+    public static ShellScriptStore addScript(ShellScriptStore newScript){
+        return shellScriptList.put(newScript.hashCode(),newScript);
+    }
 
+    public static void changeName(ShellScriptStore script, Scanner keyboard){
+        System.out.println("Current name: " + script.getName());
+        System.out.print("Enter new name: ");
+        String input = keyboard.next();
+        script.setName(input); //TODO: Confirmation dialogue
+    }
+
+    public static ShellScriptStore getScript(String path){
+        for(Integer i: shellScriptList.keySet()){
+            if(i.hashCode()== Objects.hash(path)) {
+                return shellScriptList.get(i);
+            }
+        }
+        return null;
+    }
+
+    public static ShellScriptStore findScript(String name){
+        for(ShellScriptStore i: shellScriptList.values()){
+            if(i.getName().equals(name)){
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public static boolean removeScript(ShellScriptStore script){
+        return shellScriptList.remove(script.hashCode(),script);
+    }
 }

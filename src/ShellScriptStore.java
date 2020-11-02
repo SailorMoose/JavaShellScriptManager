@@ -27,7 +27,7 @@ import java.util.Objects;
 
 public class ShellScriptStore implements Serializable {
 
-    private String path;
+    private String path; //QUESTION: should be final?
     private String description;
     private String name;
     private String directory;

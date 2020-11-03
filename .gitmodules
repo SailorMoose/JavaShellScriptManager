@@ -1,0 +1,3 @@
+[submodule "src/javaUI"]
+	path = src/javaUI
+	url = git@bitbucket.org:sailor9531/javaui.git

@@ -26,39 +26,16 @@
 package Menu;
 
 import java.io.IOException;
-import java.util.Scanner;
 
-public class MenuItem extends UI {
+public class MainMenu {
+   public static void main(String[] args) throws IOException, InterruptedException {
+      UI[] menu={ new ListScriptsAction(),
+                  new ExecuteScript()};
 
-    private final UI[] menu;
-    private final String name;
+      MenuItem mainMenu=new MenuItem("Main Menu", menu);
 
-    MenuItem(String name ,UI[] menu){
-        this.name=name;
-        this.menu=menu;
-    }
+      mainMenu.run();
+   }
 
-    @Override
-    public void run() throws IOException, InterruptedException {
-        printMenu();
-        menu[getChoice()].run();
-    }
 
-    private int getChoice() {
-        Scanner keyboard=new Scanner(System.in);
-        int input=keyboard.nextInt();
-        keyboard.close();
-        return input-1;
-    }
-
-    private void printMenu() {
-        System.out.println(name);
-        for(int i=0;i<menu.length;i++){
-            System.out.println((i+1) + menu[i].toString());
-        }
-    }
-    @Override
-    public String toString(){
-        return name;
-    }
 }

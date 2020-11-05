@@ -25,9 +25,14 @@
 
 package Menu;
 
-import ScriptHandling.*;
+import ScriptHandling.ScriptExecutor;
+import ScriptHandling.ScriptManager;
 
-public abstract class MenuAction implements UI {
+import java.io.IOException;
+import java.util.Objects;
+import java.util.Scanner;
+
+public abstract class MenuAction extends UI {
 
     private final String name;
 
@@ -53,3 +58,17 @@ class ListScriptsAction extends MenuAction{
     }
 }
 
+class ExecuteScript extends MenuAction{
+
+    protected ExecuteScript() {
+        super("Execute Scripts");
+    }
+
+    @Override
+    public void run() throws IOException, InterruptedException {
+        System.out.println("Enter path to script to execute:");
+        Scanner keyboard=new Scanner(System.in);
+        String input = keyboard.next();
+        ScriptExecutor.runScript(Objects.requireNonNull(ScriptManager.getScript(input)));
+    }
+}

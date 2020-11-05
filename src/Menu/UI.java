@@ -23,6 +23,8 @@ package Menu;/*
  *
  */
 
-public interface UI {
-    void run();
+import java.io.IOException;
+
+public abstract class UI {
+    abstract void run() throws IOException, InterruptedException;
 }

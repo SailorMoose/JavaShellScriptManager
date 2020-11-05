@@ -1,34 +1,34 @@
 /*
+ *
+ *
  * The MIT License (MIT)
  *
  * Copyright (c) 2020 Rasmus Olstedt
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation
+ *  files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify,
+ *  merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+ *  LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+ *  NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ *  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ *  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
  */
 
+package ScriptHandling;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class ScriptManager{
 
-    private static Map<Integer,ShellScriptStore> shellScriptList;
+    private static Map<Integer,ShellScriptStore> shellScriptList; //QUESTION: Better to use ArrayList??
 
     public static ShellScriptStore addScript(ShellScriptStore newScript){
         return shellScriptList.put(newScript.hashCode(),newScript);
@@ -81,13 +81,20 @@ public class ScriptManager{
         return script;
     }
 
-    private static void modifyScript(ShellScriptStore script, Scanner keyboard) {
+    public static void listScripts(){
+        ArrayList<ShellScriptStore> values= new ArrayList<>(shellScriptList.values());
+        for(int i=0;i<values.size();i++){
+            System.out.println((i+1) + ". \n" + values.get(i));
+        }
+    }
+
+    public static void modifyScript(ShellScriptStore script, Scanner keyboard) {
         changeName(script,keyboard);
         changeDescription(script,keyboard);
         changeDirectory(script,keyboard);
     }
 
-    private static void changeDirectory(ShellScriptStore script, Scanner keyboard) {
+    public static void changeDirectory(ShellScriptStore script, Scanner keyboard) {
         System.out.println("Current working directory: " + script.getDirectory());
         System.out.print("Enter new directory: ");
         String input=keyboard.next();
@@ -95,7 +102,7 @@ public class ScriptManager{
         script.setDirectory(input);//TODO: Add confirmation dialogue
     }
 
-    private static void changeDescription(ShellScriptStore script, Scanner keyboard) {
+    public static void changeDescription(ShellScriptStore script, Scanner keyboard) {
         System.out.println("Current description:\n" + script.getDescription());
         System.out.print("Enter new description: ");
         String input=keyboard.next();

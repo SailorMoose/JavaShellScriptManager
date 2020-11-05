@@ -23,6 +23,8 @@
  *
  */
 
+package Menu;
+
 import java.util.Scanner;
 
 public class MenuItem implements UI {
@@ -54,6 +56,7 @@ public class MenuItem implements UI {
             System.out.println((i+1) + menu[i].toString());
         }
     }
+    @Override
     public String toString(){
         return name;
     }

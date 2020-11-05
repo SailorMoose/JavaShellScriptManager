@@ -20,6 +20,7 @@
  *
  */
 
+package ScriptHandling;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -100,7 +101,7 @@ public class ShellScriptStore implements Serializable {
 
     @Override
     public String toString() {
-        return "ShellScriptStore{" +
+        return "ScriptHandling.ShellScriptStore{" +
                 "path='" + path + '\'' +
                 ", description='" + description + '\'' +
                 ", name='" + name + '\'' +

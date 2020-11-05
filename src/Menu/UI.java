@@ -1,4 +1,4 @@
-/*
+package Menu;/*
  * The MIT License (MIT)
  *
  * Copyright (c) 2020 Rasmus Olstedt
@@ -25,5 +25,4 @@
 
 public interface UI {
     void run();
-    String toString();
 }

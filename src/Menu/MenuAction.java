@@ -23,5 +23,33 @@
  *
  */
 
+package Menu;
+
+import ScriptHandling.*;
+
 public abstract class MenuAction implements UI {
+
+    private final String name;
+
+    protected MenuAction(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
+
+class ListScriptsAction extends MenuAction{
+
+    protected ListScriptsAction() {
+        super("List Scripts");
+    }
+
+    @Override
+    public void run() {
+        ScriptManager.listScripts();
+    }
+}
+

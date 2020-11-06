@@ -27,10 +27,11 @@ package Menu;
 
 import ScriptHandling.ScriptExecutor;
 import ScriptHandling.ScriptManager;
+import ScriptHandling.ShellScript;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Scanner;
 
 public abstract class MenuAction extends UI {
 
@@ -53,22 +54,41 @@ class ListScriptsAction extends MenuAction{
     }
 
     @Override
-    public void run() {
-        ScriptManager.listScripts();
+    public void run() throws IOException, InterruptedException {
+        ArrayList<ShellScript> values = ScriptManager.listScripts();
+        System.out.println("Run Script:");
+        int input=MenuItem.keyboard.nextInt();
+        if(input==-1){
+            return;
+        }
+        ScriptExecutor.runScript(values.get(input - 1));
+
     }
 }
 
-class ExecuteScript extends MenuAction{
+class ExecuteScriptAction extends MenuAction{
 
-    protected ExecuteScript() {
-        super("Execute Scripts");
+    protected ExecuteScriptAction() {
+        super("Execute Script");
     }
 
     @Override
     public void run() throws IOException, InterruptedException {
         System.out.println("Enter path to script to execute:");
-        Scanner keyboard=new Scanner(System.in);
-        String input = keyboard.next();
+        String input = MenuItem.keyboard.next();
         ScriptExecutor.runScript(Objects.requireNonNull(ScriptManager.getScript(input)));
+    }
+}
+
+class AddScriptObjectAction extends MenuAction{
+
+    protected AddScriptObjectAction() {
+        super("Add Script");
+    }
+
+    @Override
+    void run() throws IOException, InterruptedException {
+        ShellScript script = ScriptManager.newScript(MenuItem.keyboard);
+        ScriptManager.addScript(script);
     }
 }

@@ -28,13 +28,13 @@ import java.util.Scanner;
 
 public class ScriptManager{
 
-    private static Map<Integer,ShellScriptStore> shellScriptList; //QUESTION: Better to use ArrayList??
+    private static Map<Integer, ShellScript> shellScriptList; //QUESTION: Better to use ArrayList??
 
-    public static ShellScriptStore addScript(ShellScriptStore newScript){
+    public static ShellScript addScript(ShellScript newScript){
         return shellScriptList.put(newScript.hashCode(),newScript);
     }
 
-    public static void changeName(ShellScriptStore script, Scanner keyboard){
+    public static void changeName(ShellScript script, Scanner keyboard){
         System.out.println("Current name: " + script.getName());
         System.out.print("Enter new name: ");
         String input = keyboard.next();
@@ -42,7 +42,7 @@ public class ScriptManager{
         script.setName(input); //TODO: Confirmation dialogue
     }
 
-    public static ShellScriptStore getScript(String path){
+    public static ShellScript getScript(String path){
         for(Integer i: shellScriptList.keySet()){
             if(i.hashCode() == Objects.hash(path)) { //QUESTION: is this right?
                 return shellScriptList.get(i);
@@ -51,8 +51,8 @@ public class ScriptManager{
         return null;
     }
 
-    public static ShellScriptStore findScript(String name){
-        for(ShellScriptStore i: shellScriptList.values()){
+    public static ShellScript findScript(String name){
+        for(ShellScript i: shellScriptList.values()){
             if(i.getName().equals(name)){
                 return i;
             }
@@ -60,14 +60,14 @@ public class ScriptManager{
         return null;
     }
 
-    public static boolean removeScript(ShellScriptStore script){
+    public static boolean removeScript(ShellScript script){
         return shellScriptList.remove(script.hashCode(),script);
     }
 
-    public static ShellScriptStore newScript(Scanner keyboard){
+    public static ShellScript newScript(Scanner keyboard){
         System.out.println("Enter script path");
         String input = keyboard.next();
-        ShellScriptStore script = new ShellScriptStore(input);
+        ShellScript script = new ShellScript(input);
         System.out.println("Script created at path: " + script.getPath());
         System.out.println("Do you want to change default values? [y/N]");
         input = keyboard.next();
@@ -81,20 +81,21 @@ public class ScriptManager{
         return script;
     }
 
-    public static void listScripts(){
-        ArrayList<ShellScriptStore> values= new ArrayList<>(shellScriptList.values());
+    public static ArrayList<ShellScript> listScripts(){
+        ArrayList<ShellScript> values= new ArrayList<>(shellScriptList.values());
         for(int i=0;i<values.size();i++){
             System.out.println((i+1) + ". \n" + values.get(i));
         }
+        return values;
     }
 
-    public static void modifyScript(ShellScriptStore script, Scanner keyboard) {
+    public static void modifyScript(ShellScript script, Scanner keyboard) {
         changeName(script,keyboard);
         changeDescription(script,keyboard);
         changeDirectory(script,keyboard);
     }
 
-    public static void changeDirectory(ShellScriptStore script, Scanner keyboard) {
+    public static void changeDirectory(ShellScript script, Scanner keyboard) {
         System.out.println("Current working directory: " + script.getDirectory());
         System.out.print("Enter new directory: ");
         String input=keyboard.next();
@@ -102,7 +103,7 @@ public class ScriptManager{
         script.setDirectory(input);//TODO: Add confirmation dialogue
     }
 
-    public static void changeDescription(ShellScriptStore script, Scanner keyboard) {
+    public static void changeDescription(ShellScript script, Scanner keyboard) {
         System.out.println("Current description:\n" + script.getDescription());
         System.out.print("Enter new description: ");
         String input=keyboard.next();

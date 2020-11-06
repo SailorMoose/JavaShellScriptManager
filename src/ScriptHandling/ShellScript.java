@@ -21,12 +21,16 @@
  */
 
 package ScriptHandling;
+
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class ShellScriptStore implements Serializable {
+public class ShellScript implements Serializable {
 
     private String path; //QUESTION: should be final?
     private String description;
@@ -36,7 +40,7 @@ public class ShellScriptStore implements Serializable {
     /**
      * @param path Full path to script to store
      */
-    ShellScriptStore(@NotNull String path){
+    ShellScript(@NotNull String path){
         this.path=path;
 
         // Use the position of the last slash to detect default working directory and name
@@ -60,7 +64,7 @@ public class ShellScriptStore implements Serializable {
     /**
      * @param original The object to make a copy of
      */
-    ShellScriptStore(ShellScriptStore original){
+    ShellScript(ShellScript original){
         this.name=original.name;
         this.description=original.description;
         this.directory=original.directory;
@@ -113,12 +117,26 @@ public class ShellScriptStore implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ShellScriptStore that = (ShellScriptStore) o;
+        ShellScript that = (ShellScript) o;
         return getPath().equals(that.getPath());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getPath());
+    }
+
+    private void readObject(ObjectInputStream aInputStream) throws IOException {
+        path=aInputStream.readUTF();
+        description=aInputStream.readUTF();
+        name=aInputStream.readUTF();
+        directory=aInputStream.readUTF();
+    }
+
+    private void writeObject(ObjectOutputStream aOutputStream) throws IOException {
+        aOutputStream.writeUTF(path);
+        aOutputStream.writeUTF(description);
+        aOutputStream.writeUTF(name);
+        aOutputStream.writeUTF(directory);
     }
 }

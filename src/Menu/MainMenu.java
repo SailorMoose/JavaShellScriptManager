@@ -28,14 +28,13 @@ package Menu;
 import java.io.IOException;
 
 public class MainMenu {
-   public static void main(String[] args) throws IOException, InterruptedException {
+   public static void main(String[] args) throws IOException, InterruptedException { //TODO: Should not be the actual main function
       UI[] menu={ new ListScriptsAction(),
-                  new ExecuteScript()};
+                  new ExecuteScriptAction(),
+                  new AddScriptObjectAction()};
 
       MenuItem mainMenu=new MenuItem("Main Menu", menu);
 
       mainMenu.run();
    }
-
-
 }

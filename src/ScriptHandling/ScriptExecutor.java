@@ -26,7 +26,7 @@ import java.lang.ProcessBuilder;
 
 public class ScriptExecutor {
 
-    public static void runScript(ShellScriptStore script) throws IOException, InterruptedException {
+    public static void runScript(ShellScript script) throws IOException, InterruptedException {
 
         ProcessBuilder builder = new ProcessBuilder();
         builder.command("sh", script.getPath());

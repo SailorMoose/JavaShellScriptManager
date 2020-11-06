@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class MenuItem extends UI {
-
+    public static Scanner keyboard=new Scanner(System.in);
     private final UI[] menu;
     private final String name;
 
@@ -45,16 +45,14 @@ public class MenuItem extends UI {
     }
 
     private int getChoice() {
-        Scanner keyboard=new Scanner(System.in);
         int input=keyboard.nextInt();
-        keyboard.close();
         return input-1;
     }
 
     private void printMenu() {
         System.out.println(name);
         for(int i=0;i<menu.length;i++){
-            System.out.println((i+1) + menu[i].toString());
+            System.out.println((i+1) + ". " + menu[i].toString());
         }
     }
     @Override
